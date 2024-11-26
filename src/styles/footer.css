@@ -20,8 +20,9 @@ footer {
 		}
 
 		img {
+			margin: 0 7px 8.5px 6px;
 			width: auto;
-			height: 7dvh;
+			height: 6.6dvh;
 			border-radius: 5px;
 		}
 
@@ -51,7 +52,7 @@ footer {
 
 		input[type="range"] {
 			appearance: none;
-			width: 100%;
+			width: 80%;
 			height: 5px;
 			margin: 2px;
 			border-radius: 8px;
@@ -116,15 +117,27 @@ footer {
 			button {
 				background-color: transparent;
 				border: none;
+
 				transition: all 0.2s;
+
+				&:hover {
+					cursor: pointer;
+				}
 			}
 
 			#play {
 				border-radius: 50%;
+				padding: 4px;
 				background-color: whitesmoke;
 				color: black;
 				display: flex;
 				align-items: center;
+				transition: transform 0.2s ease;
+
+				&:hover {
+					cursor: pointer;
+					transform: scale(1.1);
+				}
 			}
 
 			button:not(#play) {
@@ -137,8 +150,21 @@ footer {
 		}
 	}
 
-	#right{
+	#right {
 		display: flex;
 		justify-content: end;
 	}
+}
+
+#time-display {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	width: 100%;
+}
+
+#time-display span {
+	color: white;
+	font-size: 0.9rem;
+	margin: 0 10px;
 }

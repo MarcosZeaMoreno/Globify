@@ -5,33 +5,34 @@ header {
 	height: 8.5dvh;
 	padding: 10px;
 
-	svg {
-		padding: 7px;
-		transition: all .2s;
+	.logo {
+		padding: 19px;
 		cursor: pointer;
+	}
 
-		&:hover {
-			transform: scale(1.1);
-		}
+	.icon {
+		padding: 5px;
 	}
 
 	#searchbar {
 		display: flex;
 		align-items: center;
 		justify-content: start;
+		background-color: var(--gray);
 		gap: 10px;
 		border-radius: 50px;
 		height: 100%;
 		width: 30%;
-		background-color: var(--gray);
 		padding-inline: 8px;
 		transition: all .3s;
-		border: 0px solid var(--gray);
+		border: 1px solid var(--gray);
 
-		&:hover {
+		&:hover,
+		&:focus-within {
 			border: 1px solid whitesmoke;
+			background-color: var(--gray-elevated);
 
-			svg{
+			svg {
 				color: whitesmoke;
 			}
 		}
@@ -60,14 +61,14 @@ header {
 	}
 }
 
-img {
+#photo {
 	border-radius: 50%;
 	height: 100%;
 	border: solid var(--gray) 7px;
 	transition: all .3s;
 
 	&:hover {
-		border: solid var(--gray) 5px;
+		border: solid var(--gray) 1px;
 		cursor: pointer;
 	}
 }
