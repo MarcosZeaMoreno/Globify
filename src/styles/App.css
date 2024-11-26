@@ -1,0 +1,11 @@
+:root{
+	--dark: #000;
+}
+
+* {
+	font-family: 'Circular', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+}
+
+main{
+	background-color: var(--dark);
+}

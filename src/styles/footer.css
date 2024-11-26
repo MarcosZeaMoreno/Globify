@@ -1,0 +1,144 @@
+footer {
+	width: 100%;
+	display: grid;
+	grid-template-columns: 1fr 2fr 1fr;
+	background-color: var(--black);
+	color: #fff;
+	padding: 10px;
+
+	#left {
+		align-self: flex-start;
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		gap: 10px;
+
+		div {
+			display: flex;
+			flex-direction: column;
+			gap: 5px;
+		}
+
+		img {
+			width: auto;
+			height: 7dvh;
+			border-radius: 5px;
+		}
+
+		h5 {
+			font-size: 0.8rem;
+		}
+
+		p {
+			font-size: 0.7rem;
+			color: var(--light-gray);
+		}
+	}
+
+	#middle {
+		display: flex;
+		flex-direction: column;
+		justify-content: start;
+		gap: 10px;
+		align-items: center;
+		width: 100%;
+
+		a {
+			color: #fff;
+			text-decoration: none;
+			font-size: 0.8rem;
+		}
+
+		input[type="range"] {
+			appearance: none;
+			width: 100%;
+			height: 5px;
+			margin: 2px;
+			border-radius: 8px;
+
+			transition: all .2s ease;
+			background-color: #5e5e5e;
+			position: relative;
+			overflow: visible;
+
+			&:hover::-webkit-slider-thumb {
+				background-color: white;
+				cursor: pointer;
+				transition: 0.2s ease;
+				position: relative;
+				z-index: 2;
+			}
+		}
+
+		input[type="range"]::before {
+			content: "";
+			position: absolute;
+			top: 0;
+			left: 0;
+			height: 100%;
+
+			border-radius: 8px;
+			width: var(--range-value, 50%);
+			/* Usar la variable CSS para el ancho */
+			background-color: white;
+			z-index: 1;
+		}
+
+		input[type="range"]::-webkit-slider-thumb {
+			-webkit-appearance: none;
+			width: 15px;
+			height: 15px;
+			border-radius: 50%;
+			background-color: transparent;
+			position: relative;
+			z-index: 2;
+			transition: background-color 0.2s ease;
+		}
+
+		input[type="range"]:hover::before {
+			background-color: #1abc54;
+		}
+
+		input[type="range"]::-webkit-slider-thumb:hover {
+			background-color: white;
+			cursor: pointer;
+			transition: 0.2s ease;
+			position: relative;
+			z-index: 2;
+		}
+
+		& #control-panel {
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+			gap: 20px;
+
+			button {
+				background-color: transparent;
+				border: none;
+				transition: all 0.2s;
+			}
+
+			#play {
+				border-radius: 50%;
+				background-color: whitesmoke;
+				color: black;
+				display: flex;
+				align-items: center;
+			}
+
+			button:not(#play) {
+				color: var(--light-gray);
+
+				&:hover {
+					color: white;
+				}
+			}
+		}
+	}
+
+	#right{
+		display: flex;
+		justify-content: end;
+	}
+}
