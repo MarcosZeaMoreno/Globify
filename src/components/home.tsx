@@ -14,6 +14,7 @@ const Secure: React.FC = () => {
 		if (accessTokenMatch) {
 			const accessToken = accessTokenMatch[1];
 			localStorage.setItem("accessToken", accessToken);
+			window.history.replaceState(null, '', window.location.pathname);
 		} else {
 			console.log("No access token found in the URL");
 		}

@@ -2,9 +2,15 @@ import React from 'react';
 import '../styles/navbar.css';
 import { useEffect, useState } from 'react';
 import { getProfile } from '../API/getUser';
+import { searchSongs as fetchSongs } from '../API/searchSongs';
+import { playSong } from '../API/playSong';
 
 const Navbar: React.FC = () => {
 	const [photoUrl, setPhotoUrl] = useState<string>('');
+	const [search, searchSongs] = useState<string>('');
+	const [input, setInput] = useState<string>('');
+	const [songs, setSongs] = useState<any[]>([]);
+	const [showPopup, setShowPopup] = useState<boolean>(false);
 
 	useEffect(() => {
 		const fetchPhoto = async () => {
@@ -15,6 +21,25 @@ const Navbar: React.FC = () => {
 
 		fetchPhoto();
 	}, []);
+
+	useEffect(() => {
+		const handleClickOutside = (event: MouseEvent) => {
+			const popup = document.querySelector('.popup');
+			if (popup && !popup.contains(event.target as Node)) {
+				setShowPopup(false);
+			}
+		};
+
+		document.addEventListener('mousedown', handleClickOutside);
+		return () => {
+			document.removeEventListener('mousedown', handleClickOutside);
+		};
+	}, []);
+
+	const handleSongClick = async (songUri: string) => {
+		await playSong(songUri);
+		setShowPopup(false);
+	};
 
 	return (
 		<header>
@@ -27,10 +52,28 @@ const Navbar: React.FC = () => {
 					</g>
 				</g>
 			</svg>
-			<div id='searchbar'>
+			<form onSubmit={async (e) => {
+				e.preventDefault();
+				const results = await fetchSongs(input);
+				setSongs(results);
+				setShowPopup(true);
+			}} id='searchbar'>
 				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="icon icon-tabler icons-tabler-outline icon-tabler-search"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" /><path d="M21 21l-6 -6" /></svg>
-				<input type="text" placeholder='¿Qué quieres reproducir?' />
-			</div>
+				<input type="text" value={input} onChange={(e) => setInput(e.target.value)} placeholder='¿Qué quieres reproducir?' />
+			</form>
+			{showPopup && (
+				<div className="popup">
+					<div className="popup-content">
+						<ul>
+							{songs.map((song, index) => (
+								<li key={index} onClick={() => handleSongClick(song.uri)}>
+									{song.name} by {song.artists[0].name}
+								</li>
+							))}
+						</ul>
+					</div>
+				</div>
+			)}
 			<img id="photo" src={photoUrl} alt="Profile" />
 		</header>
 	)

@@ -50,7 +50,6 @@ const Footer = () => {
 
 			player.addListener('ready', ({ device_id }) => {
 				console.log('Ready with Device ID', device_id);
-				// Transfer playback to the Web Playback SDK
 				fetch(`https://api.spotify.com/v1/me/player`, {
 					method: 'PUT',
 					headers: {
@@ -87,6 +86,7 @@ const Footer = () => {
 						is_playing: !state.paused
 					});
 					setRangeValue((state.position / state.duration) * 100);
+					setDuration(state.duration);
 				}
 			});
 
@@ -127,25 +127,67 @@ const Footer = () => {
 	};
 
 	const handlePlayPause = async () => {
-		if (player) {
+		const token = localStorage.getItem("accessToken");
+		if (!token) {
+			throw new Error('No access token provided');
+		}
+		try {
 			if (isPlaying) {
-				await player.pause();
+				await fetch('https://api.spotify.com/v1/me/player/pause', {
+					method: 'PUT',
+					headers: {
+						Authorization: 'Bearer ' + token,
+						'Content-Type': 'application/json'
+					}
+				});
 			} else {
-				await player.resume();
+				await fetch('https://api.spotify.com/v1/me/player/play', {
+					method: 'PUT',
+					headers: {
+						Authorization: 'Bearer ' + token,
+						'Content-Type': 'application/json'
+					}
+				});
 			}
 			setIsPlaying(!isPlaying);
+		} catch (error) {
+			console.error('Failed to toggle play/pause:', error);
 		}
 	};
 
 	const handleNext = async () => {
-		if (player) {
-			await player.nextTrack();
+		const token = localStorage.getItem("accessToken");
+		if (!token) {
+			throw new Error('No access token provided');
+		}
+		try {
+			await fetch('https://api.spotify.com/v1/me/player/next', {
+				method: 'POST',
+				headers: {
+					Authorization: 'Bearer ' + token,
+					'Content-Type': 'application/json'
+				}
+			});
+		} catch (error) {
+			console.error('Failed to skip to next track:', error);
 		}
 	};
 
 	const handlePrevious = async () => {
-		if (player) {
-			await player.previousTrack();
+		const token = localStorage.getItem("accessToken");
+		if (!token) {
+			throw new Error('No access token provided');
+		}
+		try {
+			await fetch('https://api.spotify.com/v1/me/player/previous', {
+				method: 'POST',
+				headers: {
+					Authorization: 'Bearer ' + token,
+					'Content-Type': 'application/json'
+				}
+			});
+		} catch (error) {
+			console.error('Failed to skip to previous track:', error);
 		}
 	};
 
